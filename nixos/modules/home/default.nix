@@ -7,6 +7,7 @@
     ./zsh
     ./nvim
     ./git
+    ./tmux
 
     # desktop
     ./kde
