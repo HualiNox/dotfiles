@@ -1,4 +1,8 @@
-# modules/system/base.nix
+/**
+  系统级基础软件包模块。
+
+  启用 nix-index/comma、非自由包，并安装维护系统所需的通用 CLI 工具。
+*/
 { pkgs, inputs, ... }:
 
 {

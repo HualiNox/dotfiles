@@ -1,3 +1,8 @@
+/**
+  KDE Plasma 桌面模块。
+
+  仅在 desktop 与 kde 开关同时启用时加载 SDDM、Plasma、fcitx5 和 KDE 工具。
+*/
 {
   config,
   lib,
@@ -11,6 +16,7 @@ let
   desktopCfg = config.modules.desktop.enable;
 in
 {
+  # KDE 是 desktop 的子开关，避免未启用桌面时单独拉起图形栈。
   options.modules.desktop.kde.enable = mkEnableOption "KDE Plasma desktop configuration";
 
   config = mkIf (cfg && desktopCfg) {
@@ -26,7 +32,7 @@ in
 
     services.desktopManager.plasma6.enable = true;
 
-    # fcitx5
+    # fcitx5 中文输入法，Wayland 下同时启用 GTK/Qt 前端。
     i18n.inputMethod = {
       enable = true;
       type = "fcitx5";
@@ -47,6 +53,7 @@ in
 
     security.polkit.enable = true;
 
+    # 系统级桌面工具和 KDE 集成组件。
     environment.systemPackages = with pkgs; [
       pkgs.fcitx5-mellow-themes
 

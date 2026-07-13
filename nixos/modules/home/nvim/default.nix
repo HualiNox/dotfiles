@@ -1,3 +1,8 @@
+/**
+  Neovim Home Manager 模块。
+
+  启用 Neovim 及其外部依赖，真实编辑器配置由仓库中的 Lua 配置负责。
+*/
 {
   pkgs,
   lib,
@@ -8,6 +13,7 @@
 with lib;
 
 {
+  # 主机用户入口按需开启，避免服务器环境默认安装完整编辑器工具链。
   options.modules.nvim = {
     enable = mkEnableOption "nvim";
   };
@@ -50,6 +56,8 @@ with lib;
 
     programs.neovim = {
       enable = true;
+
+      # 让 EDITOR、vi/vim/vimdiff 都指向同一套 Neovim 配置。
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
