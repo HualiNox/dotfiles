@@ -1,7 +1,7 @@
 /**
   桌面环境通用系统模块。
 
-  提供桌面总开关，负责禁止睡眠策略，并在桌面环境中强制使用中文 locale。
+  提供桌面总开关，并负责禁止睡眠策略。
 */
 {
   lib,
@@ -10,11 +10,11 @@
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf mkForce;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
   imports = [
-    ./kde.nix
+    ./gnome.nix
   ];
 
   # 桌面总开关；具体桌面实现通过子模块继续细分。
@@ -40,8 +40,5 @@ in
     systemd.targets.hibernate.enable = lib.mkForce false;
     systemd.targets."hybrid-sleep".enable = lib.mkForce false;
     systemd.targets."suspend-then-hibernate".enable = lib.mkForce false;
-
-    # 桌面环境默认中文，覆盖 i18n 模块的英文默认值。
-    i18n.defaultLocale = mkForce "zh_CN.UTF-8";
   };
 }

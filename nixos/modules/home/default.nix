@@ -17,7 +17,7 @@
     ./tmux
 
     # desktop
-    ./kde
+    ./gnome
 
     # ide 需要包或配置文件
     ./vscode
