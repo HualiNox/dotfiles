@@ -59,23 +59,28 @@ in
     services = {
       xserver.enable = true;
 
-      displayManager.gdm.enable = true;
+      displayManager = {
+        gdm.enable = true;
+        defaultSession = "gnome-zh";
+        sessionPackages = mkAfter [ gnomeChineseSession ];
+      };
       desktopManager.gnome.enable = true;
+      gnome = {
+        core-apps.enable = false;
+        sushi.enable = true;
+        gnome-keyring.enable = true;
+      };
     };
 
-    # 只让图形桌面默认中文；系统 locale 仍由 i18n 模块保持英文，避免影响 TTY。
-    services.displayManager = {
-      defaultSession = "gnome-zh";
-      sessionPackages = mkAfter [ gnomeChineseSession ];
-    };
-
-    # ibus 中文输入法，使用 Rime 与 libpinyin 覆盖主要中文输入场景。
+    # ibus 中文输入法，使用雾凇拼音 Rime 数据源与 libpinyin 覆盖主要中文输入场景。
     i18n.inputMethod = {
       enable = true;
       type = "ibus";
 
       ibus.engines = with pkgs.ibus-engines; [
-        rime
+        (rime.override {
+          rimeDataPkgs = [ pkgs.rime-ice ];
+        })
         libpinyin
       ];
     };
@@ -83,26 +88,46 @@ in
     security.polkit.enable = true;
 
     # 系统级桌面工具和 GNOME 集成组件。
-    environment.systemPackages = with pkgs; [
-      # 终端与字体
-      ghostty
-      nerd-fonts.jetbrains-mono
+    environment = {
+      systemPackages = with pkgs; [
+        # 终端与字体
+        ghostty
+        nerd-fonts.jetbrains-mono
 
-      # 剪贴板与基础工具
-      wl-clipboard
-      brightnessctl
-      playerctl
-      pavucontrol
-      networkmanagerapplet
+        # 剪贴板
+        wl-clipboard
 
-      # GNOME 常用工具
-      gnome-tweaks
-      gnomeExtensions.appindicator
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.dash-to-dock
-    ];
+        # GNOME 常用工具
+        nautilus
+        file-roller
+        gnome-system-monitor
+        baobab
+        gnome-calculator
+        gnome-tweaks
+        gnome-menus
+
+        # 缩略图
+        ffmpegthumbnailer
+      ];
+
+      # 让 Nautilus 找到系统路径中的扩展
+      sessionVariables.NAUTILUS_4_EXTENSION_DIR = "${config.system.path}/lib/nautilus/extensions-4";
+      pathsToLink = [ "/share/nautilus-python/extensions" ];
+    };
+
+    # GNOME Disks 需要配套 D-Bus 服务，使用模块开关比只安装包更完整。
+    programs.gnome-disks.enable = true;
+
+    xdg.mime.defaultApplications = {
+      "inode/directory" = [
+        "nautilus.desktop"
+        "org.gnome.Nautilus.desktop"
+      ];
+    };
 
     # U 盘、移动硬盘等
     services.udisks2.enable = true;
+
   };
+
 }

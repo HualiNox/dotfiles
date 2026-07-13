@@ -4,6 +4,7 @@
   在系统 GNOME 桌面启用时部署 Ghostty 配置，并安装主题、图标与光标包。
 */
 {
+  config,
   lib,
   osConfig,
   pkgs,
@@ -14,6 +15,16 @@ let
   inherit (lib) mkIf;
   cfg = osConfig.modules.desktop.gnome.enable;
   desktopCfg = osConfig.modules.desktop.enable;
+
+  fripperyApplicationsMenu = pkgs.gnomeExtensions.frippery-applications-menu.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      substituteInPlace extension.js \
+        --replace-fail "import GMenu from 'gi://GMenu';" \
+          "import GIRepository from 'gi://GIRepository';
+      GIRepository.Repository.dup_default().prepend_search_path('${pkgs.gnome-menus}/lib/girepository-1.0');
+      const {default: GMenu} = await import('gi://GMenu');"
+    '';
+  });
 in
 {
   config = mkIf (cfg && desktopCfg) {
@@ -26,5 +37,18 @@ in
       bibata-cursors
       tela-icon-theme
     ];
+
+    # GNOME Shell 扩展
+    programs.gnome-shell = {
+      enable = true;
+
+      extensions = with pkgs.gnomeExtensions; [
+        { package = appindicator; }
+        { package = dash-to-dock; }
+        { package = fripperyApplicationsMenu; }
+        { package = pano; }
+        { package = advanced-media-controller; }
+      ];
+    };
   };
 }

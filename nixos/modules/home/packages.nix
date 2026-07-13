@@ -11,7 +11,7 @@
   ...
 }:
 let
-  inherit (lib) optionals;
+  inherit (lib) mkIf optionals;
 
   cfg = osConfig.modules.desktop.enable;
 
@@ -24,6 +24,8 @@ let
     };
   };
 
+  yesplaymusic = pkgs.callPackage ../../pkgs/yesplaymusic { };
+
   homePackages = with pkgs; [
     fastfetch
     btop
@@ -34,23 +36,26 @@ let
   ];
 
   # 桌面应用体积较大，只在启用桌面模块时进入用户环境。
-  desktopPackages = with pkgs; [
-    # ide
-    vscode
-    jetbrains.idea
-    android-studio
+  desktopPackages = (
+    with unstablePkgs;
+    [
+      # ide
+      vscode
+      jetbrains.idea
+      android-studio
 
-    # 浏览器
-    google-chrome
+      # 浏览器
+      google-chrome
 
-    # 通讯工具
-    unstablePkgs.qq # QQ Linux 官方客户端
-    wechat # 微信 Linux 官方客户端
-    telegram-desktop # Telegram Desktop
+      # 通讯工具
+      qq # QQ Linux 官方客户端
+      wechat # 微信 Linux 官方客户端
+      telegram-desktop # Telegram Desktop
 
-    # 游戏
-    unstablePkgs.hmcl
-  ];
+      # 娱乐
+      yesplaymusic
+    ]
+  );
 in
 {
   # optionals 保持无桌面主机的 home closure 更小。
