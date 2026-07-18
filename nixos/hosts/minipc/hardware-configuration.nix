@@ -43,8 +43,15 @@
 
   # 数据盘独立挂载，用户目录和服务私有数据通过 bind mount 放到这里。
   fileSystems."/data" = {
-    device = "/dev/disk/by-uuid/a3f5375f-db72-4e28-9ec7-2c2930241ab4";
-    fsType = "ext4";
+    device = "/dev/disk/by-uuid/cb3d302e-5a9e-41f2-acbd-8f6977c6a69c";
+    fsType = "btrfs";
+    options = [
+      "noatime"
+      "compress=zstd:3"
+      "ssd"
+      "discard=async"
+      "space_cache=v2"
+    ];
   };
 
   # 用户家目录绑定到数据盘，便于系统盘重装时保留个人数据。
@@ -52,6 +59,7 @@
     device = "/data/home/hualimao";
     fsType = "none";
     options = [ "bind" ];
+    depends = [ "/data" ];
   };
 
   # systemd DynamicUser 服务的私有状态目录同样落在数据盘。
@@ -59,6 +67,7 @@
     device = "/data/var/lib/private";
     fsType = "none";
     options = [ "bind" ];
+    depends = [ "/data" ];
   };
 
   # 服务密钥必须位于 Nix Store 外，这里统一绑定到数据盘。
@@ -66,6 +75,7 @@
     device = "/data/var/lib/secrets";
     fsType = "none";
     options = [ "bind" ];
+    depends = [ "/data" ];
   };
 
   # 使用 swapfile 保留内存压力下的兜底空间。
