@@ -34,38 +34,22 @@
       # 当前仓库只声明 x86_64-linux 主机；新增架构时从这里扩展。
       system = "x86_64-linux";
 
-      # host 与 hostname 分开配置，避免同一 hostname 配置到同一局域网多台设备
+      # 每个 host 目录提供完整主机入口，flake 只负责选择主机和注入 inputs。
       mkSystem =
-        pkgs: system: host: hostname:
+        pkgs: system: host:
         pkgs.lib.nixosSystem {
-          system = system;
+          inherit system;
           modules = [
-            { networking.hostName = hostname; }
-
-            # 系统配置文件
-            ./modules/system/default.nix
-
-            # 硬件配置文件
-            (./. + "/hosts/${host}/hardware-configuration.nix")
-
-            # home-manager
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useUserPackages = true;
-                useGlobalPkgs = true;
-                backupFileExtension = "hm-backup";
-                extraSpecialArgs = { inherit inputs; };
-                users.hualimao = (./. + "/hosts/${host}/user.nix");
-              };
-            }
+            (./. + "/hosts/${host}")
           ];
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs home-manager;
+          };
         };
     in
     {
       nixosConfigurations = {
-        catserver = mkSystem inputs.nixpkgs system "minipc" "catserver";
+        catserver = mkSystem inputs.nixpkgs system "minipc";
       };
     };
 }

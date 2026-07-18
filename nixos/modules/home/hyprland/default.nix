@@ -8,13 +8,16 @@ let
 
   desktopCfg = osConfig.modules.desktop.enable;
   cfg = osConfig.modules.desktop.hyprland.enable;
-
 in
 {
-  options.modules.hyprland.enable = mkEnableOption "Hyprland Home Manager Packages";
+  options.modules.hyprland.enable = mkEnableOption "Hyprland Home Manager configuration";
   config.modules.hyprland.enable = cfg && desktopCfg;
 
   imports = [
-    ./hyprland.nix
+    ./config-files.nix
+    ./packages.nix
+    ./services.nix
+    ./theme.nix
+    ./waybar.nix
   ];
 }
