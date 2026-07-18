@@ -49,6 +49,10 @@ with lib;
       rustup
       jdk21
 
+      #
+      nixd
+      nixfmt
+
       # 剪贴板
       xclip
       wl-clipboard

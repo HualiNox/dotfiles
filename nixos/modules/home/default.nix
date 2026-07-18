@@ -18,6 +18,7 @@
 
     # desktop
     ./gnome
+    ./hyprland
 
     # ide 需要包或配置文件
     ./vscode

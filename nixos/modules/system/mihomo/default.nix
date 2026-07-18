@@ -12,6 +12,33 @@
 
 let
   inherit (lib) mkIf mkEnableOption mkForce;
+  fakeIpRoute = "198.18.0.0/16";
+  mihomoFakeIpGateway = "198.18.0.2";
+  mihomoTunDevice = "mihomo";
+  installFakeIpMainRoute = pkgs.writeShellScript "mihomo-install-fakeip-main-route" ''
+    set -eu
+
+    ip="${pkgs.iproute2}/bin/ip"
+    grep="${pkgs.gnugrep}/bin/grep"
+    sleep="${pkgs.coreutils}/bin/sleep"
+
+    i=0
+    while [ "$i" -lt 50 ]; do
+      if "$ip" -4 route show dev ${mihomoTunDevice} 2>/dev/null | "$grep" -q '^198\.18\.0\.0/30 '; then
+        "$ip" -4 route replace ${fakeIpRoute} via ${mihomoFakeIpGateway} dev ${mihomoTunDevice}
+        exit 0
+      fi
+
+      i=$((i + 1))
+      "$sleep" 0.1
+    done
+
+    echo "mihomo TUN route was not ready; unable to install ${fakeIpRoute} route" >&2
+    exit 1
+  '';
+  cleanupFakeIpMainRoute = pkgs.writeShellScript "mihomo-cleanup-fakeip-main-route" ''
+    "${pkgs.iproute2}/bin/ip" -4 route del ${fakeIpRoute} via ${mihomoFakeIpGateway} dev ${mihomoTunDevice} 2>/dev/null || true
+  '';
 in
 {
   # 代理配置含订阅和规则，开关默认关闭，由主机入口按需启用。
@@ -48,6 +75,11 @@ in
         "CAP_NET_ADMIN"
         "CAP_NET_BIND_SERVICE"
       ];
+
+      # Tailscale 会给自己的控制面连接打 fwmark 0x80000，并在 mihomo 策略规则前查询 main 表。
+      # 将 fake-ip 段放进 main 表，避免这些连接把 fake-ip 泄漏到物理网关。
+      ExecStartPost = installFakeIpMainRoute;
+      ExecStopPost = cleanupFakeIpMainRoute;
     };
   };
 }

@@ -8,8 +8,8 @@
   "margin-right": 8,
 
   "modules-left": [
-    "niri/workspaces",
-    "niri/window"
+    "hyprland/workspaces",
+    "hyprland/window"
   ],
   "modules-center": [
     "clock"
@@ -23,7 +23,7 @@
     "custom/lock"
   ],
 
-  "niri/workspaces": {
+  "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
       "active": "●",
@@ -31,7 +31,7 @@
     }
   },
 
-  "niri/window": {
+  "hyprland/window": {
     "format": "{}",
     "max-length": 60
   },
@@ -93,6 +93,6 @@
     "format": "󰌾",
     "tooltip": true,
     "tooltip-format": "Lock",
-    "on-click": "swaylock -f"
+    "on-click": "hyprlock"
   }
 }

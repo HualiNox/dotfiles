@@ -14,7 +14,9 @@ let
 in
 {
   imports = [
+    ./fcitx5.nix
     ./gnome.nix
+    ./hyprland.nix
   ];
 
   # 桌面总开关；具体桌面实现通过子模块继续细分。

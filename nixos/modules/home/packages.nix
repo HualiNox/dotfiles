@@ -44,6 +44,8 @@ let
       jetbrains.idea
       android-studio
 
+      ghostty
+
       # 浏览器
       google-chrome
 
@@ -53,6 +55,7 @@ let
       telegram-desktop # Telegram Desktop
 
       # 娱乐
+
       yesplaymusic
     ]
   );

@@ -74,5 +74,8 @@
     nix-tree
     nix-du
     direnv
+
+    # tools
+    rsync
   ];
 }

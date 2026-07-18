@@ -32,8 +32,9 @@
   config.modules = {
     desktop = {
       enable = true;
-
-      gnome.enable = true;
+      fcitx5.enable = true;
+      # gnome.enable= true;
+      hyprland.enable = true;
     };
 
     mihomo.enable = true;
