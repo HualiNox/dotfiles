@@ -35,24 +35,31 @@ in
           })
         ];
 
-        settings.inputMethod = {
-          "Groups/0" = {
-            Name = "Default";
-            "Default Layout" = "us";
-            DefaultIM = "rime";
+        settings = {
+          globalOptions.Behavior = {
+            DisabledAddons = "kimpanel";
+            EnabledAddons = "classicui";
           };
 
-          "Groups/0/Items/0" = {
-            Name = "keyboard-us";
-            Layout = "";
-          };
+          inputMethod = {
+            "Groups/0" = {
+              Name = "Default";
+              "Default Layout" = "us";
+              DefaultIM = "rime";
+            };
 
-          "Groups/0/Items/1" = {
-            Name = "rime";
-            Layout = "";
-          };
+            "Groups/0/Items/0" = {
+              Name = "keyboard-us";
+              Layout = "";
+            };
 
-          GroupOrder."0" = "Default";
+            "Groups/0/Items/1" = {
+              Name = "rime";
+              Layout = "";
+            };
+
+            GroupOrder."0" = "Default";
+          };
         };
       };
     };

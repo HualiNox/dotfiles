@@ -15,6 +15,7 @@ in
     ./config.nix
     ./dms-plugins.nix
     ./wallpaper-engine.nix
+    ./fcitx5.nix
 
     inputs.dms.homeModules.dank-material-shell
   ];
