@@ -9,6 +9,9 @@
   ...
 }:
 
+let
+  hostConfig = import ./host-config.nix;
+in
 {
   imports = [
     ../../modules/system/default.nix
@@ -16,24 +19,17 @@
     home-manager.nixosModules.home-manager
   ];
 
-  networking.hostName = "catserver";
+  networking.hostName = hostConfig.hostName;
 
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = { inherit inputs; };
-    users.hualimao = ./home.nix;
-  };
-
-  modules = {
-    desktop = {
-      enable = true;
-      fcitx5.enable = true;
-      niri.enable = true;
+    extraSpecialArgs = {
+      inherit inputs hostConfig;
     };
-
-    mihomo.enable = true;
-    buildkite.enable = true;
+    users.${hostConfig.user.name} = ./home.nix;
   };
+
+  modules = hostConfig.systemModules;
 }

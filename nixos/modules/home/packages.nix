@@ -45,8 +45,6 @@ let
       android-studio
       zed-editor
 
-      ghostty
-
       # 浏览器
       google-chrome
 

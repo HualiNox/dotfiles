@@ -49,6 +49,8 @@
         config.allowUnfree = true;
       };
 
+      mkHostConfig = host: import (./. + "/hosts/${host}/host-config.nix");
+
       # 每个 host 目录提供完整主机入口，flake 只负责选择主机和注入 inputs。
       mkSystem =
         system: host:
@@ -66,30 +68,25 @@
         {
           pkgs,
           host,
-          username,
-          homeDirectory,
+          hostConfig,
           osConfig,
         }:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           modules = [
-            {
-              home = {
-                inherit username homeDirectory;
-              };
-            }
             (./. + "/hosts/${host}/home.nix")
           ];
 
           extraSpecialArgs = {
-            inherit inputs osConfig;
+            inherit inputs osConfig hostConfig;
           };
         };
 
+      minipcHostConfig = mkHostConfig "minipc";
       catserver = mkSystem system "minipc";
     in
-    rec {
+    {
       nixosConfigurations = {
         inherit catserver;
       };
@@ -98,8 +95,7 @@
         "hualimao@catserver" = mkHome {
           inherit pkgs;
           host = "minipc";
-          username = "hualimao";
-          homeDirectory = "/home/hualimao";
+          hostConfig = minipcHostConfig;
           osConfig = catserver.config;
         };
       };
