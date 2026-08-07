@@ -1,5 +1,0 @@
-require("configs.theme")
-require("configs.input")
-require("configs.binds")
-require("configs.monitors")
-require("configs.environment")

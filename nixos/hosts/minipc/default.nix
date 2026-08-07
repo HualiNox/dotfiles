@@ -30,7 +30,7 @@
     desktop = {
       enable = true;
       fcitx5.enable = true;
-      hyprland.enable = true;
+      niri.enable = true;
     };
 
     mihomo.enable = true;
