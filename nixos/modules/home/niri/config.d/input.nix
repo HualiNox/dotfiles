@@ -16,7 +16,7 @@
     mouse = {
       natural-scroll = false;
       accel-profile = "flat";
-      accel-speed = 0.0;
+      accel-speed = -0.7;
     };
 
     focus-follows-mouse = {

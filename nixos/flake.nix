@@ -33,6 +33,8 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine";
   };
 
   outputs =

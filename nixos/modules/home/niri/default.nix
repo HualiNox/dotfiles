@@ -90,6 +90,7 @@ in
     };
 
     home.packages = with pkgs; [
+      inputs.linux-wallpaper-engine.packages.${pkgs.stdenv.hostPlatform.system}.default
       nautilus
 
       adw-gtk3
