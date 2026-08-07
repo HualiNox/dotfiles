@@ -29,7 +29,7 @@ with lib;
       gzip
 
       # treesitter 编译
-      tree-sitter
+      # tree-sitter
       gcc
       gnumake
       pkg-config
