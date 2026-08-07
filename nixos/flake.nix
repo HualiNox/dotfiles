@@ -44,10 +44,15 @@
       # 当前仓库只声明 x86_64-linux 主机；新增架构时从这里扩展。
       system = "x86_64-linux";
 
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
       # 每个 host 目录提供完整主机入口，flake 只负责选择主机和注入 inputs。
       mkSystem =
-        pkgs: system: host:
-        pkgs.lib.nixosSystem {
+        system: host:
+        inputs.nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             (./. + "/hosts/${host}")
@@ -56,10 +61,47 @@
             inherit inputs home-manager;
           };
         };
+
+      mkHome =
+        {
+          pkgs,
+          host,
+          username,
+          homeDirectory,
+          osConfig,
+        }:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          modules = [
+            {
+              home = {
+                inherit username homeDirectory;
+              };
+            }
+            (./. + "/hosts/${host}/home.nix")
+          ];
+
+          extraSpecialArgs = {
+            inherit inputs osConfig;
+          };
+        };
+
+      catserver = mkSystem system "minipc";
     in
-    {
+    rec {
       nixosConfigurations = {
-        catserver = mkSystem inputs.nixpkgs system "minipc";
+        inherit catserver;
+      };
+
+      homeConfigurations = {
+        "hualimao@catserver" = mkHome {
+          inherit pkgs;
+          host = "minipc";
+          username = "hualimao";
+          homeDirectory = "/home/hualimao";
+          osConfig = catserver.config;
+        };
       };
     };
 }
