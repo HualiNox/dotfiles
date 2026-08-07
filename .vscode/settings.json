@@ -1,0 +1,26 @@
+{
+    "Lua.workspace.library": [
+        "/run/current-system/sw/share/hypr/stubs"
+    ],
+    "Lua.diagnostics.globals": [
+        "screenshot_region",
+        "screenshot_fullscreen"
+    ],
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "nixd",
+    "nix.formatterPath": "nixfmt",
+    "nix.serverSettings": {
+        "nixd": {
+            "formatting": {
+                "command": [
+                    "nixfmt"
+                ]
+            },
+            "options": {
+                "nixos": {
+                    "expr": "(builtins.getFlake \"git+file://${workspaceFolder}/nixos\").nixosConfigurations.catserver.options"
+                }
+            }
+        }
+    }
+}

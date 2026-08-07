@@ -43,6 +43,7 @@ let
       vscode
       jetbrains.idea
       android-studio
+      zed-editor
 
       ghostty
 
@@ -55,7 +56,6 @@ let
       telegram-desktop # Telegram Desktop
 
       # 娱乐
-
       yesplaymusic
     ]
   );
