@@ -8,6 +8,7 @@
 {
   # 用户配置
   users.users.hualimao = {
+    description = "HuaLiMao-AQ";
     isNormalUser = true;
     extraGroups = [
       "wheel"
