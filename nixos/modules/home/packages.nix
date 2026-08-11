@@ -55,6 +55,15 @@ let
 
       # 娱乐
       yesplaymusic
+
+      # 媒体工具
+      celluloid
+      mpv
+      loupe
+
+      # AI
+      codex
+      antigravity-cli
     ]
   );
 in
