@@ -3,9 +3,15 @@
 # zi 不可用 → 安静返回，不阻塞 shell
 (( ${+functions[zi]} )) || return
 
+# EDITOR=nvim 会使 Zsh 默认选用 viins；统一使用 Emacs 命令行键位。
+bindkey -e
+
 # 初始化 zi 自身的补全体系
 zicompinit
 zi light z-shell/z-a-meta-plugins
+
+# 常用 CLI 的社区补全集合；自带脚本会注册到 fpath，由 completion.zsh 统一 compinit。
+zi light zsh-users/zsh-completions
 
 # 延迟加载非关键插件
 zi ice wait lucid atinit='zpcompinit'
