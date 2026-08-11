@@ -21,8 +21,21 @@ in
   ];
 
   config = mkIf cfg {
+    home.pointerCursor = {
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+      size = 24;
+
+      gtk.enable = true;
+      x11.enable = true;
+    };
+
     programs.dank-material-shell = {
       enable = true;
+      settings = {
+        fontFamily = "Noto Sans";
+        monoFontFamily = "Fira Code";
+      };
 
       systemd = {
         enable = true; # Systemd service for auto-start
@@ -59,6 +72,10 @@ in
 
     gtk = {
       enable = true;
+      font = {
+        name = "Noto Sans";
+        size = 11;
+      };
 
       theme = {
         name = "adw-gtk3-dark";
@@ -68,11 +85,6 @@ in
       iconTheme = {
         name = "Papirus-Dark";
         package = pkgs.papirus-icon-theme;
-      };
-
-      cursorTheme = {
-        name = "Bibata-Modern-Ice";
-        package = pkgs.bibata-cursors;
       };
     };
 
