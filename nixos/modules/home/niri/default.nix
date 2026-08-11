@@ -1,20 +1,21 @@
 {
   inputs,
+  config,
   lib,
-  osConfig,
   pkgs,
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkEnableOption mkIf;
 
-  cfg = osConfig.modules.desktop.enable && osConfig.modules.desktop.niri.enable;
+  cfg = config.modules.desktop.niri.enable;
 in
 {
+  options.modules.desktop.niri.enable = mkEnableOption "Niri and DMS user configuration";
+
   imports = [
     ./config.nix
     ./dms-plugins.nix
-    ./wallpaper-engine.nix
     ./fcitx5.nix
 
     inputs.dms.homeModules.dank-material-shell
@@ -32,10 +33,6 @@ in
 
     programs.dank-material-shell = {
       enable = true;
-      settings = {
-        fontFamily = "Noto Sans";
-        monoFontFamily = "Fira Code";
-      };
 
       systemd = {
         enable = true; # Systemd service for auto-start

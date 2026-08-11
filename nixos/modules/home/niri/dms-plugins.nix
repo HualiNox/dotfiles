@@ -1,11 +1,11 @@
 {
   lib,
-  osConfig,
+  config,
   pkgs,
   ...
 }:
 let
-  cfg = osConfig.modules.desktop.enable && osConfig.modules.desktop.niri.enable;
+  cfg = config.modules.desktop.niri.enable;
 
   fetchPlugin =
     {

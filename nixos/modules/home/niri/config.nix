@@ -1,9 +1,13 @@
 {
+  config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
-
+let
+  cfg = config.modules.desktop.niri.enable;
+in
 {
   imports = [
     inputs.niri.homeModules.config
@@ -19,5 +23,7 @@
     ./config.d/window-rules.nix
   ];
 
-  programs.niri.package = pkgs.niri;
+  config = lib.mkIf cfg {
+    programs.niri.package = pkgs.niri;
+  };
 }

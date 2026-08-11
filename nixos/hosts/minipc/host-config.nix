@@ -18,6 +18,7 @@
   };
 
   homeModules = {
+    desktop.niri.enable = true;
     nvim.enable = true;
     zsh.enable = true;
     git-ext.enable = true;
