@@ -80,7 +80,7 @@ in
     };
 
     systemd.tmpfiles.rules = [
-      "d /var/lib/secrets/nut 0750 root nut -"
+      "d /var/lib/secrets/nut 0700 root root -"
     ];
   };
 }
