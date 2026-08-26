@@ -1,6 +1,7 @@
 /** WTR Pro 主机入口。 */
 {
   home-manager,
+  lib,
   inputs,
   ...
 }:
@@ -16,6 +17,7 @@ in
   ];
 
   networking.hostName = hostConfig.hostName;
+  networking.networkmanager.enable = lib.mkForce false;
 
   home-manager = {
     useUserPackages = true;
