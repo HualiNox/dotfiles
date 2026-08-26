@@ -29,8 +29,7 @@ with lib;
     programs.zsh = {
       enable = true;
 
-      # 这些功能由我们的模块（completion.zsh / plugins.zsh）通过 zi 提供，
-      # 关闭 HM 内置版本，避免重复 compinit 与重复加载插件
+      # 补全与插件由 plugins.zsh 通过 zi 提供
       enableCompletion = false;
       autosuggestion.enable = false;
       syntaxHighlighting.enable = false;

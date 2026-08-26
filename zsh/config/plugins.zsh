@@ -10,7 +10,7 @@ bindkey -e
 zicompinit
 zi light z-shell/z-a-meta-plugins
 
-# 常用 CLI 的社区补全集合；自带脚本会注册到 fpath，由 completion.zsh 统一 compinit。
+# 常用 CLI 的社区补全集合。
 zi light zsh-users/zsh-completions
 
 # 延迟加载非关键插件
@@ -18,7 +18,7 @@ zi ice wait lucid atinit='zpcompinit'
 zi ice wait lucid
 zi light z-shell/z-a-bin-gem-node
 
-# fzf-tab 依赖 compinit 之后的 completion 体系
+# fzf-tab 依赖 Zi 的补全体系
 zi ice wait lucid
 zi light Aloxaf/fzf-tab
 

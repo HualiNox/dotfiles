@@ -3,6 +3,8 @@
 typeset -gx ZI_HOME="${ZI_HOME:-$HOME/.config/zsh/zi}"
 typeset -gx ZI_BIN_DIR="${ZI_BIN_DIR:-$ZI_HOME/bin}"
 
+mkdir -p "$ZI_HOME/completions"
+
 # 兼容 Zi 旧版关联数组接口
 typeset -gA ZI
 ZI[HOME_DIR]="$ZI_HOME"

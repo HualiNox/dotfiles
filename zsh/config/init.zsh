@@ -35,7 +35,6 @@ _zsh_load theme.zsh
 _zsh_load aliases.zsh
 _zsh_load history.zsh
 _zsh_load plugins.zsh
-_zsh_load completion.zsh
 _zsh_load terminal.zsh
 
 # 本机私有配置（不提交）
