@@ -13,6 +13,7 @@
     networkBond = {
       enable = true;
       interfaces = [ "enp2s0" "enp3s0" ];
+      mode = "balance-alb";
     };
     samba.enable = true;
     ups = {

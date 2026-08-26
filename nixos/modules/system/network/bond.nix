@@ -16,13 +16,17 @@ in
       type = types.listOf types.str;
       default = [ ];
     };
+    mode = mkOption {
+      type = types.enum [ "balance-alb" "balance-tlb" "802.3ad" ];
+      default = "802.3ad";
+    };
   };
 
   config = mkIf cfg.enable {
     networking.bonds.bond0 = {
       interfaces = cfg.interfaces;
       driverOptions = {
-        mode = "802.3ad";
+        mode = cfg.mode;
         miimon = "100";
         lacp_rate = "1";
         xmit_hash_policy = "layer3+4";
