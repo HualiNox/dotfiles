@@ -28,8 +28,9 @@ in
       driverOptions = {
         mode = cfg.mode;
         miimon = "100";
-        lacp_rate = "1";
         xmit_hash_policy = "layer3+4";
+      } // lib.optionalAttrs (cfg.mode == "802.3ad") {
+        lacp_rate = "1";
       };
     };
 
