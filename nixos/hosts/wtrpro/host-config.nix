@@ -1,5 +1,5 @@
 {
-  hostName = "wtrpro";
+  hostName = "catedge";
 
   user = {
     name = "hualimao";
