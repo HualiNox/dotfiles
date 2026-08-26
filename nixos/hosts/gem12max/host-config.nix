@@ -7,6 +7,9 @@
   };
 
   systemModules = {
+    docker.enable = true;
+    tailscale.enable = true;
+
     desktop = {
       enable = true;
       fcitx5.enable = true;

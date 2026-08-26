@@ -16,6 +16,10 @@
     ./android
     ./docker
     ./tailscale
+    ./network/bond.nix
+    ./samba.nix
+    ./ups.nix
+    ./hdd-power.nix
     ./packages.nix
 
     # 桌面配置

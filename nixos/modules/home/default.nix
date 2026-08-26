@@ -12,6 +12,7 @@
   imports = [
     # cli
     ./zsh
+    ./direnv
     ./nvim
     ./git
     ./tmux

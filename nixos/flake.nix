@@ -87,10 +87,13 @@
 
       gem12maxHostConfig = mkHostConfig "gem12max";
       gem12max = mkSystem system "gem12max";
+      wtrproHostConfig = mkHostConfig "wtrpro";
+      wtrpro = mkSystem system "wtrpro";
     in
     {
       nixosConfigurations = {
         inherit gem12max;
+        inherit wtrpro;
       };
 
       homeConfigurations = {
@@ -99,6 +102,13 @@
           host = "gem12max";
           hostConfig = gem12maxHostConfig;
           osConfig = gem12max.config;
+        };
+
+        "hualimao@wtrpro" = mkHome {
+          inherit pkgs;
+          host = "wtrpro";
+          hostConfig = wtrproHostConfig;
+          osConfig = wtrpro.config;
         };
 
       };

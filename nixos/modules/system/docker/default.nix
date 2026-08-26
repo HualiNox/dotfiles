@@ -3,16 +3,27 @@
 
   启用 Docker daemon，并安装 Compose 与 Buildx 客户端插件。
 */
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  inherit (lib) mkEnableOption mkIf;
+in
 
 {
-  virtualisation.docker = {
-    enable = true;
-  };
+  options.modules.docker.enable = mkEnableOption "Docker";
 
-  # daemon 由 virtualisation.docker 管理，这里只补常用客户端扩展。
-  environment.systemPackages = with pkgs; [
-    docker-buildx
-    docker-compose
-  ];
+  config = mkIf config.modules.docker.enable {
+    virtualisation.docker.enable = true;
+
+    # daemon 由 virtualisation.docker 管理，这里只补常用客户端扩展。
+    environment.systemPackages = with pkgs; [
+      docker-buildx
+      docker-compose
+    ];
+  };
 }
