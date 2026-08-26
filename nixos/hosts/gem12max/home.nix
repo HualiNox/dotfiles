@@ -6,7 +6,10 @@
 { hostConfig, ... }:
 
 {
-  imports = [ ../../modules/home/default.nix ];
+  imports = [
+    ../../modules/home/default.nix
+    ../../modules/home/niri
+  ];
 
   home = {
     username = hostConfig.user.name;

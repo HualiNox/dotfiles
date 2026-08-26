@@ -15,6 +15,8 @@ in
 {
   imports = [
     ../../modules/system/default.nix
+    ../../modules/system/desktop/fcitx5.nix
+    ../../modules/system/desktop/niri.nix
     ./hardware-configuration.nix
     home-manager.nixosModules.home-manager
   ];

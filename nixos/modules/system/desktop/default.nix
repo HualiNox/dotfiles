@@ -14,12 +14,6 @@ let
   desktopLocale = "zh_CN.UTF-8";
 in
 {
-  imports = [
-    ./fcitx5.nix
-    ./gnome.nix
-    ./niri.nix
-  ];
-
   # 桌面总开关；具体桌面实现通过子模块继续细分。
   options.modules.desktop.enable = mkEnableOption "desktop configuration";
 
