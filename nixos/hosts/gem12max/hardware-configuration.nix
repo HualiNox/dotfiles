@@ -2,7 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 #
-# 本文件保留 minipc 的硬件探测结果；下方数据盘、bind mount 和 swap 为本机布局。
+# 本文件保留 GEM12 Max 的硬件探测结果；下方数据盘、bind mount 和 swap 为本机布局。
 {
   config,
   lib,

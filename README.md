@@ -42,13 +42,13 @@
 ### NixOS
 
 ```bash
-./install.sh --rebuild-host=catserver
+./install.sh --rebuild-host=gem12max
 ```
 
 NixOS 下脚本先创建相对软链接，再执行：
 
 ```bash
-sudo nixos-rebuild switch --flake <repo>/nixos#catserver
+sudo nixos-rebuild switch --flake <repo>/nixos#gem12max
 ```
 
 NixOS 下的链接目标示例：
@@ -125,7 +125,7 @@ cd ~/dotfiles
 | `./install.sh --no-rebuild` | NixOS 下只处理链接，不执行 rebuild |
 | `./install.sh --skip-config` | 跳过 `nvim`、`ghostty` 等共享配置 |
 | `./install.sh --only-zsh` | 只处理 zsh 相关配置 |
-| `sudo nixos-rebuild switch --flake ./nixos#catserver` | 手动切换 NixOS 配置 |
+| `sudo nixos-rebuild switch --flake ./nixos#gem12max` | 手动切换 NixOS 配置 |
 
 ## Neovim 快捷键
 

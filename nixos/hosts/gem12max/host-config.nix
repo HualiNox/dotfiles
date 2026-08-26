@@ -1,5 +1,5 @@
 {
-  hostName = "catserver";
+  hostName = "catcore";
 
   user = {
     name = "hualimao";

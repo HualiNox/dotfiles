@@ -46,7 +46,7 @@ in
       enable = true;
 
       # agent 名称用于 Buildkite UI 和队列调度识别。
-      name = "catserver";
+      name = "gem12max";
 
       # Token 必须放在 Nix Store 外
       tokenPath = "/var/lib/secrets/buildkite/agent-token";

@@ -280,7 +280,7 @@ return {
 								expr = [[
                         (builtins.getFlake (builtins.toString ./.))
                           .nixosConfigurations
-                          ."catserver"
+                          ."gem12max"
                           .options
                       ]],
 							},
@@ -289,7 +289,7 @@ return {
 								expr = [[
                         (builtins.getFlake (builtins.toString ./.))
                           .nixosConfigurations
-                          ."catserver"
+                          ."gem12max"
                           .options
                           .home-manager
                           .users

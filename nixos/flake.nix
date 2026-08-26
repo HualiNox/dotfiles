@@ -85,21 +85,22 @@
           };
         };
 
-      minipcHostConfig = mkHostConfig "minipc";
-      catserver = mkSystem system "minipc";
+      gem12maxHostConfig = mkHostConfig "gem12max";
+      gem12max = mkSystem system "gem12max";
     in
     {
       nixosConfigurations = {
-        inherit catserver;
+        inherit gem12max;
       };
 
       homeConfigurations = {
-        "hualimao@catserver" = mkHome {
+        "hualimao@gem12max" = mkHome {
           inherit pkgs;
-          host = "minipc";
-          hostConfig = minipcHostConfig;
-          osConfig = catserver.config;
+          host = "gem12max";
+          hostConfig = gem12maxHostConfig;
+          osConfig = gem12max.config;
         };
+
       };
     };
 }

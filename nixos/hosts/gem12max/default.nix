@@ -1,5 +1,5 @@
 /**
-  minipc 系统主机入口。
+  GEM12 Max 系统主机入口。
 
   绑定硬件配置、Home Manager 用户入口和当前主机启用的系统功能。
 */
@@ -20,6 +20,12 @@ in
   ];
 
   networking.hostName = hostConfig.hostName;
+
+  # AMD 核显使用内核 amdgpu 与 Mesa 图形栈。
+  hardware.graphics.enable = true;
+
+  # 机器有 58 GiB 内存，降低正常负载下主动换出内存的倾向。
+  boot.kernel.sysctl."vm.swappiness" = 10;
 
   home-manager = {
     useUserPackages = true;
