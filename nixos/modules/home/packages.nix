@@ -7,22 +7,12 @@
   osConfig,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
-  inherit (lib) mkIf optionals;
+  inherit (lib) optionals;
 
   cfg = osConfig.modules.desktop.enable;
-
-  # 少量桌面软件需要跟进新版，单独从 unstable 包集取用。
-  unstablePkgs = import inputs.nixpkgs-unstable {
-    system = pkgs.stdenv.hostPlatform.system;
-
-    config = {
-      allowUnfree = true;
-    };
-  };
 
   yesplaymusic = pkgs.callPackage ../../pkgs/yesplaymusic { };
 
@@ -37,7 +27,7 @@ let
 
   # 桌面应用体积较大，只在启用桌面模块时进入用户环境。
   desktopPackages = (
-    with unstablePkgs;
+    with pkgs;
     [
       # ide
       vscode
