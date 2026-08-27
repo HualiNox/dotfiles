@@ -10,11 +10,6 @@
   systemModules = {
     docker.enable = true;
     tailscale.enable = true;
-    networkBond = {
-      enable = true;
-      interfaces = [ "enp2s0" "enp3s0" ];
-      mode = "balance-alb";
-    };
     samba.enable = true;
     ups = {
       enable = true;
