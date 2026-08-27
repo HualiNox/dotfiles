@@ -19,8 +19,6 @@ in
   networking.hostName = hostConfig.hostName;
   networking.networkmanager.enable = lib.mkForce false;
 
-  boot.loader.grub.efiInstallAsRemovable = true;
-
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
