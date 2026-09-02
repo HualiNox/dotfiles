@@ -50,7 +50,9 @@ zi snippet OMZP::vscode
 # autosuggestions 优先于 syntax-highlighting 加载
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
+zi ice wait lucid
 zi light zsh-users/zsh-autosuggestions
+zi ice wait lucid
 zi light zsh-users/zsh-syntax-highlighting
 
 # macOS 专属插件示例（按需放在此处）
