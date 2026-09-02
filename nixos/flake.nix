@@ -10,7 +10,6 @@
     # 主系统跟随稳定分支，保证系统重建时默认偏保守。
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
-    # Home Manager 使用的包集。
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home Manager 与系统 nixpkgs 对齐，避免用户环境和系统包集版本漂移。
@@ -46,20 +45,20 @@
       # 当前仓库只声明 x86_64-linux 主机；新增架构时从这里扩展。
       system = "x86_64-linux";
 
-      homePkgs = import inputs.nixpkgs-unstable {
+      homePkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
 
       mkHostConfig = host: import (./. + "/hosts/${host}/host-config.nix");
 
-      # 每个 host 目录提供完整主机入口，flake 只负责选择主机和注入 inputs。
+      # 每个 host 目录提供完整主机入口，flake 只负责选择目录和注入 inputs。
       mkSystem =
-        system: host:
+        system: hostDir:
         inputs.nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
-            (./. + "/hosts/${host}")
+            (./. + "/hosts/${hostDir}")
           ];
           specialArgs = {
             inherit inputs home-manager;
@@ -69,7 +68,7 @@
       mkHome =
         {
           pkgs,
-          host,
+          hostDir,
           hostConfig,
           osConfig,
         }:
@@ -77,7 +76,7 @@
           inherit pkgs;
 
           modules = [
-            (./. + "/hosts/${host}/home.nix")
+            (./. + "/hosts/${hostDir}/home.nix")
           ];
 
           extraSpecialArgs = {
@@ -85,30 +84,30 @@
           };
         };
 
-      gem12maxHostConfig = mkHostConfig "gem12max";
-      gem12max = mkSystem system "gem12max";
-      wtrproHostConfig = mkHostConfig "wtrpro";
-      wtrpro = mkSystem system "wtrpro";
+      catcoreHostConfig = mkHostConfig "gem12max";
+      catcore = mkSystem system "gem12max";
+      catedgeHostConfig = mkHostConfig "wtrpro";
+      catedge = mkSystem system "wtrpro";
     in
     {
       nixosConfigurations = {
-        inherit gem12max;
-        inherit wtrpro;
+        inherit catcore;
+        inherit catedge;
       };
 
       homeConfigurations = {
-        "hualimao@gem12max" = mkHome {
+        "hualimao@catcore" = mkHome {
           pkgs = homePkgs;
-          host = "gem12max";
-          hostConfig = gem12maxHostConfig;
-          osConfig = gem12max.config;
+          hostDir = "gem12max";
+          hostConfig = catcoreHostConfig;
+          osConfig = catcore.config;
         };
 
-        "hualimao@wtrpro" = mkHome {
+        "hualimao@catedge" = mkHome {
           pkgs = homePkgs;
-          host = "wtrpro";
-          hostConfig = wtrproHostConfig;
-          osConfig = wtrpro.config;
+          hostDir = "wtrpro";
+          hostConfig = catedgeHostConfig;
+          osConfig = catedge.config;
         };
 
       };

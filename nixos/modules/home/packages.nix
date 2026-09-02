@@ -7,10 +7,16 @@
   osConfig,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
   inherit (lib) optionals;
+
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
 
   cfg = osConfig.modules.desktop.enable;
 
@@ -39,7 +45,7 @@ let
       google-chrome
 
       # 通讯工具
-      qq # QQ Linux 官方客户端
+      unstable.qq # QQ Linux 官方客户端
       wechat # 微信 Linux 官方客户端
       telegram-desktop # Telegram Desktop
 
@@ -52,8 +58,8 @@ let
       loupe
 
       # AI
-      codex
-      antigravity-cli
+      unstable.codex
+      unstable.antigravity-cli
     ]
   );
 in
