@@ -1,3 +1,1 @@
-# mise shim 环境
-
-(( $+commands[mise] )) && eval "$(mise activate zsh --shims)"
+# mise 在交互式配置中按需初始化，避免与 terminal.zsh 重复加载。
