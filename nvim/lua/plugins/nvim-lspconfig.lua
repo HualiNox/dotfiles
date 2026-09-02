@@ -278,23 +278,40 @@ return {
 						options = {
 							nixos = {
 								expr = [[
-                        (builtins.getFlake (builtins.toString ./.))
-                          .nixosConfigurations
-                          ."gem12max"
-                          .options
+                        let
+                          flake = builtins.getFlake (builtins.toString ./.);
+                          hostNames = builtins.attrNames flake.nixosConfigurations;
+                          matches = builtins.filter
+                            (name:
+                              flake.nixosConfigurations.${name}.config.networking.hostName
+                              == builtins.getEnv "HOSTNAME")
+                            hostNames;
+                        in
+                        if matches == []
+                        then {}
+                        else flake.nixosConfigurations.${builtins.head matches}.options
                       ]],
 							},
 
 							home_manager = {
 								expr = [[
-                        (builtins.getFlake (builtins.toString ./.))
-                          .nixosConfigurations
-                          ."gem12max"
-                          .options
-                          .home-manager
-                          .users
-                          .type
-                          .getSubOptions []
+                        let
+                          flake = builtins.getFlake (builtins.toString ./.);
+                          hostNames = builtins.attrNames flake.nixosConfigurations;
+                          matches = builtins.filter
+                            (name:
+                              flake.nixosConfigurations.${name}.config.networking.hostName
+                              == builtins.getEnv "HOSTNAME")
+                            hostNames;
+                          user = builtins.getEnv "USER";
+                        in
+                        if matches == []
+                           || user == ""
+                           || !(builtins.hasAttr user
+                             flake.nixosConfigurations.${builtins.head matches}.options.home-manager.users)
+                        then {}
+                        else flake.nixosConfigurations.${builtins.head matches}
+                          .options.home-manager.users.${user}.type.getSubOptions []
                       ]],
 							},
 						},
