@@ -51,10 +51,13 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 
-		-- 使用新版 main 分支
-		branch = "main",
+			-- 使用新版 main 分支
+			branch = "main",
+			dependencies = {
+				"neovim-treesitter/treesitter-parser-registry",
+			},
 
-		-- main 分支不支持 lazy-loading
+			-- main 分支不支持 lazy-loading
 		lazy = false,
 
 		-- Lazy.nvim 的 build hook:
