@@ -20,7 +20,10 @@ if [[ "$ZSH_PLATFORM" == "linux" ]]; then
         ZSH_DISTRO="debian"
     fi
 
-    if [[ -r /proc/version ]] && grep -qi microsoft /proc/version 2>/dev/null; then
-        ZSH_IS_WSL=1
+    if [[ -r /proc/version ]]; then
+        typeset _zsh_proc_version
+        _zsh_proc_version="$(< /proc/version)"
+        [[ "${_zsh_proc_version:l}" == *microsoft* ]] && ZSH_IS_WSL=1
+        unset _zsh_proc_version
     fi
 fi
