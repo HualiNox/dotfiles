@@ -3,14 +3,12 @@
 typeset -gx ZI_HOME="${ZI_HOME:-$HOME/.config/zsh/zi}"
 typeset -gx ZI_BIN_DIR="${ZI_BIN_DIR:-$ZI_HOME/bin}"
 
-mkdir -p "$ZI_HOME/completions"
-
 # 兼容 Zi 旧版关联数组接口
 typeset -gA ZI
 ZI[HOME_DIR]="$ZI_HOME"
 ZI[BIN_DIR]="$ZI_BIN_DIR"
 
-# 自举：通过 git clone，避免依赖 get.zshell.dev
+# 自举：仅在 Zi 未安装时通过 git clone 安装。
 if [[ ! -f "$ZI_BIN_DIR/zi.zsh" ]]; then
     if command -v git >/dev/null 2>&1; then
         mkdir -p "$ZI_HOME"
