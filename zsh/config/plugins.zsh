@@ -22,6 +22,13 @@ zi light z-shell/z-a-bin-gem-node
 zi ice wait lucid
 zi light Aloxaf/fzf-tab
 
+# 输入内容后用上下键搜索历史
+zi light zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '\eOA' history-substring-search-up
+bindkey '\eOB' history-substring-search-down
+
 # 仅当存在 eza 时加载 zsh-eza
 if [[ -n "$EZA_BIN" ]]; then
     zi ice wait lucid

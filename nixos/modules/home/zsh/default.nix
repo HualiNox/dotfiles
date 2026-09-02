@@ -20,6 +20,7 @@ with lib;
       git
       curl
       fzf
+      zoxide
       eza
       bat
       ripgrep
