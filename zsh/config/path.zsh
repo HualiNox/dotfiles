@@ -2,10 +2,15 @@
 # 依赖 utils.zsh 中的 path_prepend_if_exists / command_exists
 
 # 通用工具链与用户级 bin
-path_prepend_if_exists "$HOME/.local/share/mise/shims"
-path_prepend_if_exists "$HOME/.cargo/bin"
 path_prepend_if_exists "$HOME/.local/bin"
 path_prepend_if_exists "$HOME/bin"
+
+if command_exists mise; then
+    path_prepend_if_exists "$HOME/.local/share/mise/shims"
+fi
+if [[ -x "$HOME/.cargo/bin/cargo" ]]; then
+    path_prepend_if_exists "$HOME/.cargo/bin"
+fi
 
 # macOS Homebrew：优先 Apple Silicon 路径，再回退 Intel
 if [[ "$ZSH_PLATFORM" == "macos" ]]; then
