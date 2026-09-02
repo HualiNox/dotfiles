@@ -1,4 +1,6 @@
-/** direnv 与 nix-direnv。 */
+/**
+  direnv 与 nix-direnv。
+*/
 {
   config,
   lib,

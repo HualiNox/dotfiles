@@ -36,6 +36,11 @@ zi light MichaelAquilina/zsh-you-should-use
 zi ice wait lucid
 zi light hlissner/zsh-autopair
 
+# 仅在已安装 direnv 时注入其 zsh hook
+if command_exists direnv; then
+    eval "$(direnv hook zsh)"
+fi
+
 # OMZ snippets
 zi snippet OMZL::git.zsh
 zi snippet OMZP::git
