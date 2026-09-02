@@ -16,7 +16,7 @@
       niri.enable = true;
     };
 
-    mihomo.enable = true;
+    mihomo.enable = false;
     buildkite.enable = true;
   };
 

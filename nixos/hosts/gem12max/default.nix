@@ -41,4 +41,7 @@ in
   };
 
   modules = hostConfig.systemModules;
+
+  # 通过 NixOS specialisation 临时启用 Mihomo，默认配置保持关闭。
+  specialisation.mihomo.configuration.modules.mihomo.enable = true;
 }
